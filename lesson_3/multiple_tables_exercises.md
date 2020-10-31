@@ -96,10 +96,10 @@ Expected Output
 **Answer:**
 
 ```SQL
-examples=# SELECT events.name AS name, COUNT(tickets.event_id) AS popularity FROM events 
-LEFT JOIN tickets ON events.id = tickets.event_id
-GROUP BY name
-examples-# ORDER BY popularity DESC;
+SELECT events.name as name, COUNT(tickets.event_id) AS popularity FROM events 
+   INNER JOIN tickets on events.id = tickets.event_id
+GROUP BY events.id       
+ORDER BY popularity DESC;
             name            | popularity 
 ----------------------------+------------
  A-Bomb                     |        555
