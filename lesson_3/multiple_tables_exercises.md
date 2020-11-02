@@ -143,7 +143,12 @@ Expected Output
 **Answer:**
 
 ```SQL
-examples=# SELECT customers.id as id, customers.email as email, COUNT(DISTINCT tickets.event_id)                                                                                          FROM customers INNER JOIN tickets ON tickets.customer_id = customers.id GROUP BY customers.id                                            
+examples=# SELECT customers.id, customers.email, COUNT (DISTINCT tickets.event_id)
+FROM customers
+LEFT JOIN tickets
+ON customers.id = tickets.customer_id
+GROUP BY customers.id HAVING COUNT(DISTINCT tickets.event_id) = 3
+                                            
 HAVING COUNT(DISTINCT tickets.event_ID) = 3;
   id  |                email                 | count 
 ------+--------------------------------------+-------
