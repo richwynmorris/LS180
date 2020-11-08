@@ -152,5 +152,87 @@ GROUP BY customers.name, customers.id
 ORDER BY customers.id;
  ```
 
+### Exercise 6
+
+```SQL
+SELECT services.description, COUNT(services_customers.service_id) 
+FROM services
+LEFT JOIN services_customers
+ON services.id = services_customers.service_id 
+GROUP BY services.description
+HAVING COUNT(services_customers.service_id) >= 3;
+```
+
+### Exercise 7
+
+```SQL
+billing=# SELECT SUM(services.price) AS gross
+FROM services
+INNER JOIN services_customers
+ON services.id = services_customers.service_id
+INNER JOIN customers
+ON customers.id = services_customers.customer_id;
+ gross  
+--------
+ 678.50
+(1 row)
+```
+
+### Exercise 8
+
+```SQL
+billing=# INSERT INTO customers (name, payment_token)
+billing-# VALUES ('John Doe', 'EYODHLCN');
+INSERT 0 1
+
+billing=# INSERT INTO services_customers (service_id, customer_id)
+billing-# VALUES (1, 7),
+billing-# (2,7),
+billing-# (3, 7);
+INSERT 0 3
+```
+
+### Exercise 9
+
+```SQL
+billing=# SELECT sum(services.price)
+FROM services
+INNER JOIN services_customers
+ON services.id = services_customers.service_id
+WHERE service_id::text ~ '(5|7|8)';
 
 
+
+billing=# SELECT SUM(services.price) FROM services
+CROSS JOIN customers
+billing-# WHERE services.id::text ~ '(5|7|8)';
+   sum    
+----------
+ 10493.00
+(1 row)
+```
+
+### Exercise 10
+
+```SQL
+ALTER TABLE services_customers
+DROP CONSTRAINT customers_services_service_id_fkey;
+ALTER TABLE
+
+DELETE FROM services
+WHERE id=7;
+DELETE 1
+
+DELETE FROM customers
+WHERE id=4;
+DELETE 1
+
+DELETE FROM services_customers                                
+WHERE service_id=7;
+DELETE 1
+
+ALTER TABLE services_customers ADD CONSTRAINT service_fkey FOREIGN KEY (service_id) 
+REFERENCES services(id) ON DELETE CASCADE;
+ALTER TABLE
+
+```
