@@ -38,7 +38,17 @@
 
     DCL stands for **Data Control Language** and is used primary to set authentication permissions when interacting with a database or table. DCL uses clauses like `GRANT` and `REVOKE` as part of its language. 
 
-- Write SQL statements using INSERT, UPDATE, DELETE, CREATE/ALTER/DROP TABLE, ADD/ALTER/DROP COLUMN.
+- **Write SQL statements using INSERT, UPDATE, DELETE, CREATE/ALTER/DROP TABLE, ADD/ALTER/DROP COLUMN.**
+
+- What is the syntax for an `INSERT` statement?
+
+    ```SQL
+    INSERT INTO table_name (col_1, col_2, col_3 ...)
+    VALUES (val_1, val_2, val_3 ..),
+    (val_1, val_2, val_3, ...);
+    ```    
+
+
 - Understand how to use GROUP BY, ORDER BY, WHERE, and HAVING.
 - Be familiar with using subqueries
 
