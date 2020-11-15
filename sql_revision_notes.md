@@ -70,14 +70,14 @@
     A `DELETE` statement is part of the SQL sub-language, Data Manipulation Language, and is used to delete data contained within a table. 
 
     ```sql
-    DELETE table_name
+    DELETE FROM table_name
     WHERE column_name = data;
     ```
 
     This statement will delete the data contained within the table at the row that matches the expression in the `WHERE` column. 
 
     ```sql
-    DELETE table_name;
+    DELETE FROM table_name;
     ```
 
     This statement will delete all the data contained within the table. 
@@ -190,7 +190,7 @@
     SELECT col_name
     FROM table_name
     WHERE col_name = row_data
-    ORDER BY ASC # or DESC
+    ORDER BY col_name ASC # or DESC
     ; 
     ```
 
@@ -248,15 +248,15 @@
 - **Be familiar with using sub**-**queries**
 - What is a sub-query?
 
-    A sub-query is a nested query that is performed within an outer outer query. The result of his nested query is then used the operation of the outer query. This can remove the need to JOIN two separate tables and may have some performance benefits. However, JOIN statements are generally more efficient. 
+    A sub-query is a nested query that is used as a condition within an outer query. The result of his nested query is then used the operation of the outer query. This can remove the need to JOIN two separate tables together and may have some performance benefits. However, JOIN statements are generally more efficient. 
 
 - What are the sub query expressions that can be used in combination with a nested query?
-    - `IN` - compares the evaluated expression of the outer query to the rows in the nested subquery. If the evalutated expression is in the contained within the nested sub query's rows, it returns true the row is selected.
-    - `NOT IN` - compares the evaluated expression of the outer query to the rows in the nested sub query. If the evaluated expression is NOT in the row, it returns true and the row is selected.
-    - `ALL`  - checks if all of the rows selected by evaluated expression of outer query are in the nested sub query. If they are, the statement returns true and the specified rows are selected.
-    - `SOME/ANY`  - checks if any of the rows selected by the evaluated expression of the outer query are contained within in the nested sub query. If they are, the statement returns true and all the specified rows are selected.
-    - `EXISTS`  - checks to see the row selected by the evaluated expression of the outer query exists within the nested sub query. If it does, it returns true and the specified rows are selected.
-- Provide an example of sub query
+    - `IN` - compares the evaluated expression of the outer query to the rows in the virtual table returned by the nested subquery. If the evaluated expression is contained within the nested sub query's result, it returns true the row is selected.
+    - `NOT IN` - compares the evaluated expression of the outer query to the rows in the virtual table returned by the nested sub query. If the evaluated expression is NOT in the nested sub query's result, it returns true and the row is selected.
+    - `ALL`  - checks if all of the rows selected by evaluated expression of the outer query are in the virtual table returned by the nested sub query. If they are, the statement returns true and the specified rows are selected.  `ALL` uses operators to check for this condition. (=,>,<,)
+    - `SOME/ANY`  - checks if any of the rows selected by the evaluated expression of the outer query are contained within in the virtual table returned by the nested sub query. If they are, the statement returns true and all the specified rows are selected. `ANY` of `SOME` uses operators(=,>,<,) to check for this condition.
+    - `EXISTS`  - checks to see if the nested sub query returns any results. If it does, it returns true and the specified rows in the outer query are selected.
+- Provide an example of sub query.
 
     ```sql
     CREATE TABLE pets (
@@ -282,17 +282,188 @@
 
     ```
 
+- What is a reason for using subquerys
+    - They could be argued to be more readable and make more logical sense in certain situations.
+    - They could be performance benefits to using it over a JOIN statement.
+
 ### PostgreSQL
 
-- Describe what a sequence is and what they are used for.
-- Create an auto-incrementing column.
-- Define a default value for a column.
-- Be able to describe what primary, foreign, natural, and surrogate keys are.
-- Create and remove CHECK constraints from a column.
-- Create and remove foreign key constraints from a column.
+- **Describe what a sequence is and what they are used for.**
+- What is a sequence?
+
+     A sequence is a special kind of relation that is automatically generated every time the `serial` keyword is used to define a table's schema. It remembers the last number it generated, so it will generate numbers in a predetermined sequence automatically. It does this using the `nextval` method. This is often used to keep track of, and identify, rows in a table. 
+
+- What are the two ways you can create a sequence.
+
+    You can create a sequence automatically by using the `serial` datatype when creating a table. Moreover, you can manually create a sequence through the use of the `CREATE SEQUENCE` statement followed by a name for the sequence. 
+
+- **Create an auto-incrementing column.**
+- What datatype do you use to create an auto incrementing column?
+
+    To create an auto incrementing column, you need to use the `serial` datatype in a column's definition when creating a new table. 
+
+    ```sql
+    CREATE TABLE example_table (
+    id serial PRIMARY KEY,
+    ..
+    ..
+    );
+    ```
+
+- Why would you need to use an auto incrementing column?
+
+    We primary use an auto incrementing column when we want to add a surrogate key to a row. This can be used as a unique identifier for each row. Moreover, this also provides the benefit of auto incrementing each time a new row is added.
+
+- **Define a default value for a column.**
+- How do you define a default value for a column?
+
+    You need to add the `DEFAULT` value after the data type in the column definition when creating a table. 
+
+    ```sql
+    CREATE TABLE example_table (
+    id serial PRIMARY KEY,
+    age int DEFAULT 0
+    ); 
+    ```
+
+    To change a columns value to contain a default value the syntax is:
+
+    ```sql
+    ALTER TABLE table_name
+    ALTER COLUMN column_name SET DEFAULT 0;
+    ```
+
+    To drop a default column:
+
+    ```sql
+    ALTER TABLE table_name
+    ALTER COLUMN column_name DROP DEFAULT;
+    ```
+
+    The `DEFAULT` value set for the column must be the same as the datatype defined for the column. 
+
+- **Be able to describe what primary, foreign, natural, and surrogate keys are**.
+- What is a PRIMARY KEY? What is its purpose?
+
+    A `PRIMARY KEY` is a special type of constraint that is used primarily as a unique identifier for a row within a table. A primary key will apply the the `NOT NULL` and `UNIQUE` constraints to the column by default. This allows relationships to be created between two entities. Each table can only have one PRIMARY KEY and this column is conventionally named `id.`   
+
+    Examples:
+
+    ```sql
+    # CREATING A TABLE WITH A PRIMARY KEY
+    CREATE TABLE table_name (
+    id int PRIMARY KEY,
+    .,
+    .
+    );
+    ```
+
+    ```sql
+    # ADDING A PRIMARY TO A PREEXISTING COLUMN
+    ALTER TABLE
+    ADD CONSTRAINT pk_column_name PRIMARY KEY (id);
+    ```
+
+    ```sql
+    # REMOVING A PRIMARY KEY FROM A PREEXISTING COLUMN
+    ALTER TABLE
+    DROP CONSTRAINT pk_column_name;
+    ```
+
+- What constraints does a PRIMARY KEY use by default?
+
+    `UNIQUE` and `NOT NULL`. 
+
+- Why follow the id convention as a PRIMARY KEY?
+
+    Following conventions in software development saves time, reduces confusion, and minimizes the amount of time needed to get up to speed on a new project.
+
+- What is a FOREIGN KEY? What is its purpose?
+
+    A FOREIGN KEY refers to two things: 
+
+    Foreign key column - A foreign key column represents a relationship between two tables. It references a row in a different table using it's primary key.  
+
+    Foreign key constraint - A foreign key constraint is the constraint that is placed on the values contained within foreign key column that it must abide by. 
+
+    "*A Foreign Key allows us to associate a row in one table to a row in another table. This is done by setting a column in one table as a Foreign Key and having that column reference another table's Primary Key column."* - LS
+
+- What are the two ways to add a FOREIGN KEY constraint?
+
+    ```sql
+    CREATE TABLE table_name (
+    ..,
+    ..,
+    fk_demon int REFERENCES a_different_table(pk_id)
+    ); 
+    ```
+
+    ```sql
+    ALTER TABLE table_name
+    ADD CONSTRAINT fk_custom_name FOREIGN KEY (column_name) REFERENCES a_different_table(pk_id);
+    ```
+
+    ```sql
+    # DROP A FOREIGN KEY
+    ALTER TABLE
+    DROP CONSTRAINT fk_custom_name; 
+    ```
+
+- How do Foreign Keys help maintain referential integrity?
+
+    *"One of the main benefits of using the foreign key constraints provided by a relational database is to preserve the referential integrity of the data in the database. The database does this by ensuring that every value in a foreign key column exists in the primary key column of the referenced table. Attempts to insert rows that violate the table's constraints will be rejected." - LS*
+
+- What is a natural key?
+
+    A natural key is a column where the data for each row is inherently unique. This can often be identified as something like a user's email address or phone number. 
+
+- Why are natural keys not always suitable?
+
+    Natural keys are not always suitable as they can sometimes change hands or the user may not have valid information that can be used as data. There are ways of getting around this through the use of composite keys (a combination of two natural keys) but it often more effective to use surrogate keys. 
+
+- What is a surrogate key?
+
+    A surrogate key is a value, integrated into the table by the designer, whose sole purpose is to act as a identifier for a specific row in table's data. 
+
+    The most commonly used surrogate key is the `serial`  datatype which is an auto incrementing integer. 
+
+- How can you create a surrogate key?
+
+    To create a surrogate key, it is often best to use the `serial` datatype when defining a column. This means that every time a new row of data is added to the table, the surrogate key will be auto incremented. This means each row will have a unique integer value. 
+
+- **Create and remove CHECK constraints from a column.**
+- How do you add a CHECK constraint in a column's definition?
+- How do you alter a column to include a CHECK constraint?
+- How do you drop a CHECK constraint from column?
+- How do you create your own custom data type to use in a CHECK constraint?
+
+    Use the `ENUM` function. 
+
+    First create your data type:
+
+    ```sql
+    CREATE TYPE custom_type AS ENUM (val1,val2,val3);
+    ```
+
+    Use your own custom data type in the table definition:
+
+    ```sql
+    CREATE TABLE table_name (
+    name custom_type
+    );
+    ```
+
+    Or change a preexisting column's data type to your custom type:
+
+    ```sql
+    ALTER TABLE table_name
+    ALTER COLUMN name TYPE custom_type USING name::custom_type;
+    ```
+
+- **Create and remove foreign key constraints from a column.**
 
 ### Database Diagrams
 
-- Talk about the different levels of schema.
-- Define cardinality and modality.
-- Be able to draw database diagrams using crow's foot notation.
+- **Talk about the different levels of schema.**
+- **Define cardinality and modality.**
+- **Be able to draw database diagrams using crow's foot notation.**
