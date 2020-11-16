@@ -433,8 +433,34 @@
 
 - **Create and remove CHECK constraints from a column.**
 - How do you add a CHECK constraint in a column's definition?
+
+    To add a CHECK constraint in a column's definition you need to use the following syntax:
+
+    ```sql
+    CREATE TABLE table_name (
+    id serial PRIMARY KEY,
+    name text CHECK (length(name) > 0)
+    );
+    ```
+
 - How do you alter a column to include a CHECK constraint?
+
+    To alter a columns to include a CHECK constraint you need to use the following syntax;
+
+    ```sql
+    ALTER TABLE table_name
+    ADD CHECK (column_name operator expression); 
+    ```
+
 - How do you drop a CHECK constraint from column?
+
+    To drop a constraint, use the following syntax:
+
+    ```sql
+    ALTER TABLE
+    DROP CONSTRAINT check_name; 
+    ```
+
 - How do you create your own custom data type to use in a CHECK constraint?
 
     Use the `ENUM` function. 
@@ -461,9 +487,74 @@
     ```
 
 - **Create and remove foreign key constraints from a column.**
+- How do you add a foreign key when creating a table?
+
+    ```sql
+    CREATE TABLE table_name (
+    id serial PRIMARY KEY,
+    .
+    .
+    table_2_id int REFERECES table_2(id)
+    )
+    ```
+
+- How do you add a foreign key to a preexisting column? What factors must be taken into consideration before doing this?
+
+    To add a foreign key to a preexisting column, the syntax is:
+
+    ```sql
+    ALTER TABLE table_name
+    ADD CONSTRAINT fk_name FOREIGN KEY (column_name) REFERENCES (other_table(id));
+    ```
+
+- How do you remove a foreign key from a column?
+
+    ```sql
+    ALTER TABLE table_name
+    DROP CONSTRAINT fk_name_of_constraint; 
+    ```
 
 ### Database Diagrams
 
+- What is a relational database?
+
+    Relational databases are called relational as it persists data as a set of relations. A table made up of columns and rows can be considered a relation. If you use something from the `FROM` clause in a `SELECT` statement, it's probably a relation.
+
+    A *relationship* is different in the sense that we use relationship to discuss how two entities (or data contained within tables) relate between one another. A *relation* is simply another way of saying 'table'.
+
 - **Talk about the different levels of schema.**
+- What are the 3 different levels of schema? What is each one concerned with?
+
+    The 3 different levels of schema each represent a level of abstraction when designing databases. 
+
+    - Conceptual - "*A high level design focused on entities and their relationships." - Concerned with bigger objects and higher level concepts. Not concerned with how the data will be stored in the database. This will use an entity relationship model to demonstrate the database design.*
+    - Logical - This is concerned with the logical implementation of building relationships between entities. Contains attributes and data types that are specific to a particular database. Combination of physical and conceptual. Uses SQL standard column types. Not used most of the time.
+    - Physical - .*"A low level database-specific design focused on implementation."- Concerned primarily with entity attributes, data types and rules between entities.*
 - **Define cardinality and modality.**
+- What is cardinality?
+
+    Cardinality is the number of objects that exist on each side of the relationship.
+
+    *'The number of objects on each side of the relationship (1:1, 1:M, M:M)'*
+
+- What is modality?
+
+    The modality of the relationship indicates whether the relationship between objects is required or not. 
+
+    *'Tells us whether the relationship is required (1) or optional (0).'* 
+
+    If it is required, there must be at least one instance of that entity. If its optional, there doesn't need to be any instances of that entity.
+
 - **Be able to draw database diagrams using crow's foot notation.**
+- Do entity relationship models reflect all tables used within a database?
+- What does a one to one relationship look like using crow's foot notation?
+
+    A one-to-one relationship looks like a straight line between entities.
+
+- What does a one to many relationship look like using crow's foot notation?
+
+    A one-to-many relationship looks like a straight line terminating in a crow's foot.
+
+- What does a many to many relationship look like using crow's foot notation?
+
+    A many-to-many relationship looks like a crows foot terminating in a crows foot.
