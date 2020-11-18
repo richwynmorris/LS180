@@ -1,5 +1,35 @@
 # RB180 - Study Guide
 
+### General Database Knowledge
+
+- What is a database?
+
+    A database is a structured set of data that's held in a computer. This structured and organized through the use of tables. Tables are a list of individual data entries (rows) each of which stores the values a set of defined, common attributes (columns). 
+
+- What is a relational database?
+
+    A relational database is way to organise a database based on how the each relation relates to one another. This allows us to describe the relationship between each table or entity and how they interact. This allows us to add greater depth in how we conceptualize how  each relation fits within the context of the database. Moreover this allows us to remove duplicate data that is would be needed across multiple tables. It is in essence, a structured collection of data that follows the relational model. 
+
+- What are SQL, PostgreSQL and MySQL all examples of?
+
+    A relational database management system. They allow us to create, interact, modify and remove tables that exist within a database.
+
+- What does SQL stand for? What is its purpose?
+
+    SQL stands for Structured Query Language and is the programming language that is used to interact with relational databases.
+
+- How is SQL different in its programming language to Ruby?
+
+    SQL is a declarative language which means we only need to explicitly state what needs to be done and not exactly how it should be done.  The query is executed by the relational database management system itself. Ruby, however, is a general purpose programming language.
+
+- How do we interact with a RDBMS?
+
+    To interact with a RDBMS we need to use SQL statements. These are explicit and declarative in nature and allow us to interact and and use a relational database.
+
+- Whats the difference between an SQL query and a SQL statement?
+
+    An SQL query is a subset of the SQL statement. However, a SQL query is more concerned with looking up data and searching through a table while a SQL statement is more concerned with updating or modifying data within a table. Ruby is a general purpose programming langauge.
+
 ### SQL
 
 - **Identify the different types of JOINs and explain their differences.**
