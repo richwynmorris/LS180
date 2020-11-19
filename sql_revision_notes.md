@@ -28,7 +28,71 @@
 
 - Whats the difference between an SQL query and a SQL statement?
 
-    An SQL query is a subset of the SQL statement. However, a SQL query is more concerned with looking up data and searching through a table while a SQL statement is more concerned with updating or modifying data within a table. Ruby is a general purpose programming langauge.
+    An SQL query is a subset of the SQL statement. However, a SQL query is more concerned with looking up data and searching through a table while a SQL statement is more concerned with updating or modifying data within a table. Ruby is a general purpose programming language.
+
+- What are the three reasons for learning SQL?
+
+    We interact with structured data on  a daily basis so knowing how to create an manipulate this data is a powerful skillset to develop. 
+
+    Code generated in a general purpose language like Ruby can come and go but the database that is uses will likely far outlive any other code. Therefore, it is important to master the ability to work with relational database management systems.
+
+    Lastly, they help you to build your application on a strong foundation as databases are to key to web applications.
+
+- What is schema? and what is data? What's the difference?
+
+    **Schema** refers to the structure of the database or table within a database. It is primary concerned with the how the data is organized through the use of columns, datatypes and constraints. 
+
+    **Data** refers to the values that held within a table or database. These values are stored in rows within a table and organized by columns. 
+
+### Interacting with PostgreSQL
+
+- Provide an example of a client application in PostgreSQL? What are they?
+
+    Client applications are essential wrappers for SQL commands that be executed through the command line interface. Examples of these could be `createdb` , `dropdb`, `pg_dump` or `pg_restore` .
+
+- What does `psql` do?
+
+     The `psql` command starts up a front end terminal which the user can use for interacting with a PostgreSQL database. You can issue SQL statements and queries from this terminal and see the results of those requests.  
+
+- What are the three different commands you can issue and where do you issue them?
+
+    **Utility functions/Command Line commands** - They are essentially wrappers for SQL statements are used at the command line.
+
+    **PSQL** **Metacommands** - They are used to return information on database or connect to a database. They are issued from the psql console.
+
+    **SQL statements** - These are statements that allows us to interact with a database, These are issued from a psql console. 
+
+- What are the two different commands you can make in a psql console?
+
+    **Metacommands** - These commands always start with a `/` and they are used for a number of different reasons. They can be used to connect to a database, to quit a database or return the structure of a database or table. 
+
+    **SQL statements -** These are used to issues commands to a PosgreSQL database. These are always terminated in a semicolon `;`.
+
+- What is the syntax for creating a database using  a utility function?
+
+    ```sql
+    createdb name_of_database
+    ```
+
+- What is the `psql` syntax for adding a SQL file to a preexisting postgreSQL database?
+
+    ```sql
+    psql -d database_name < my_sql_file.sql 
+    ```
+
+- What is `=` used for in a SQL query?
+
+    `=` is used as an equality operator, particularly when used within a `WHERE` clause.
+
+- How can you see what databases exists through the psql console?
+
+    ```sql
+    \list
+    ```
+
+- What are the syntax conventions when issuing SQL statements?
+
+    You need to use uppercase letters for SQL keywords and lowercase words for databases, tables, columns or rows. Files should be names using snake_case. 
 
 ### SQL
 
