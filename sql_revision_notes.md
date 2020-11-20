@@ -44,6 +44,17 @@
 
     **Data** refers to the values that held within a table or database. These values are stored in rows within a table and organized by columns. 
 
+- What are the various data types that columns use to distinguish the appropriate values for the columns?
+    - **int** - This is a integer data type and only works with whole numbers.
+    - **numeric/decimal** - This is a floating point number which can specify where the decimal point is placed. It takes two arguments, the first is the total length of the number and the second in the number of digits that come after the decimal point.
+    - **text** - This is a string datatype which holds a string with a maximum length of 65,535 bytes.
+    - **char(length) -** This is a fixed string datatype and specifies the length of the string. If the string if less characters, it pads the remaining length of the string with empty spaces.
+    - **varchar**(length)  - This is a fixed string datatype and it specifies the length of the string as an argument. If the string is less characters that specified, the **varchar** function only uses the characters it needs and drops the rest.
+    - **serial** - This is an autoincrementing integer datatype which works in combination with a sequences to track the last figure used. When new data is added to this column it autoincrements to the next integer. They cannot be NULL.
+    - **boolean** - This is a datatype which is either **true** or **false.**
+    - **Timestamp** - This datatype uses date and time. It does this through the year, month and day (YYY-MM-DD) and the hour, minute second (HH-MM-SS) format.
+    - **Date** - contains the date but does not use the time feature.
+
 ### Interacting with PostgreSQL
 
 - Provide an example of a client application in PostgreSQL? What are they?
