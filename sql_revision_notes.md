@@ -44,7 +44,7 @@
 
     **Data** refers to the values that held within a table or database. These values are stored in rows within a table and organized by columns. 
 
-- What are the various data types that columns use to distinguish the appropriate values for the columns?
+- What are the various data types?
     - **int** - This is a integer data type and only works with whole numbers.
     - **numeric/decimal** - This is a floating point number which can specify where the decimal point is placed. It takes two arguments, the first is the total length of the number and the second in the number of digits that come after the decimal point.
     - **text** - This is a string datatype which holds a string with a maximum length of 65,535 bytes.
@@ -52,8 +52,38 @@
     - **varchar**(length)  - This is a fixed string datatype and it specifies the length of the string as an argument. If the string is less characters that specified, the **varchar** function only uses the characters it needs and drops the rest.
     - **serial** - This is an autoincrementing integer datatype which works in combination with a sequences to track the last figure used. When new data is added to this column it autoincrements to the next integer. They cannot be NULL.
     - **boolean** - This is a datatype which is either **true** or **false.**
-    - **Timestamp** - This datatype uses date and time. It does this through the year, month and day (YYY-MM-DD) and the hour, minute second (HH-MM-SS) format.
+    - **TImestamp** - This datatype uses date and time. It does this through the year, month and day (YYY-MM-DD) and the hour, minute second (HH-MM-SS) format.
     - **Date** - contains the date but does not use the time feature.
+
+- What are the mandatory and optional elements when defining a column?
+
+    A datatype is mandatory and a constraint is optional.
+
+- What is the purpose of keys and constraint?
+
+    The purpose of keys and constraints act as rules that define what data that can be entered into certain columns. They are used as part of the design schema and ensure a reliable quality and integrity of data.  
+
+- What is CRUD and how does it translate to postgreSQL?
+
+    CRUD stands for CREATE, READ, UPDATE and DELETE. These statements are analogous to PostgreSQL's INSERT, SELECT, UPDATE and DELETE. 
+
+- What is the `<>` operator used for?
+
+    This is analogous to the not equal or `!=` symbol.
+
+- What are the three different operators that are used in SQL? Provide examples of each.
+
+    The three different type of operators are **comparison**, **logical** and **string matching.**
+
+    **Comparison** - comparison operators are used to compare two values between one another and returns the results where the expression evaluates to true. Comparison operators consist of `=`, `≥=`,  `<=`, `>`, `<`   and `<>` .
+
+    **Logical** - logical operators allows you to combine multiple conditions in a single expression. There are three of them that can be used `AND`, `OR` or `NOT`.
+
+    **String Matching Operators** - string matching operators allows you to search through the subset of the data contained within the column. It can be used to through search for sub strings using the `LIKE` condition.  It also uses the `%` character, as a wild card, before, after or to bookend string characters to specify what the string should contain. `LIKE` fulfills the same function as `SIMILAR TO` except `SIMILAR to` uses regex to pattern match. 
+
+- What is *normalization?*
+
+    Normalization is the process of splitting up data across multiple tables to prevent data duplication and preserve data integrity. This means we're able to reduce data redundency and improve data integrity, 
 
 ### Interacting with PostgreSQL
 
@@ -105,6 +135,42 @@
 
     You need to use uppercase letters for SQL keywords and lowercase words for databases, tables, columns or rows. Files should be names using snake_case. 
 
+- If you don't add a value for a column when inserting data into a table, what will SQL do?
+
+    SQL will default to NULL and insert this into the table that is lacking a value. If a NOT NULL constraint is added to that column, SQL will return an exception. 
+
+- Why cant you use `value = NULL`?
+
+    You can't use `value = NULL` as the`NULL` is a special value that represents nothing. As a result, `IS NULL` must be must instead to evaluate the expression.
+
+- Explain `LIMIT` and `OFFSET` .
+
+    `LIMIT` allows you to limit the number of rows that are returned by the query that you make. This means you can return the first result of the group of rows that are returned. Moreover, the `OFFSET` keyword allows you to skip a number of rows and only see the results after the stated offset number. 
+
+- Explain `DISTINCT` .
+
+    `DISTINCT` filters the returned results and removes any duplicate values. 
+
+- What is the difference between `UPDATE` and `DELETE`?
+
+    Using the `UPDATE` clause means you can update the value of a specific column. However, you are unable to delete a value in a specific column. You can only delete and entire row of data. However, you can emulate this process by updating a specific columns data to `NULL` which approximates nothing and the outcome of deletion.
+
+- What does the `ON DELETE CASCADE` clause refer to ?
+
+    This is added so that is the row the key is referencing is delete, the row that includes this clause will also be deleted. If this is not used and we try to delete the row and a key if is referencing in another table it will return an error. 
+
+- How does SQL execute queries?
+
+    PostgreSQL executes `SELECT` queries in the following way:
+
+    1. Rows are collected into a virtual derived table, including data from `JOIN` clauses.
+    2. Rows are filtered using `WHERE` conditions.
+    3. Rows are divided into groups via `GROUP BY`.
+    4. Groups are filtered using `HAVING` conditions.
+    5. Compute values to return using `SELECT` list.
+    6. Sort results via `ORDER BY`.
+    7. Limit results via `LIMIT`.
+
 ### SQL
 
 - **Identify the different types of JOINs and explain their differences.**
@@ -144,6 +210,8 @@
 - What is DCL?
 
     DCL stands for **Data Control Language** and is used primary to set authentication permissions when interacting with a database or table. DCL uses clauses like `GRANT` and `REVOKE` as part of its language. 
+
+    DCL largely uses the 'owner' field of the table to set permissions and restrictions as to who can interact and alter the table's schema and its data. 
 
 - **Write SQL statements using INSERT, UPDATE, DELETE, CREATE/ALTER/DROP TABLE, ADD/ALTER/DROP COLUMN.**
 - What is the syntax for an `INSERT` statement? What does it do?
@@ -271,7 +339,7 @@
 - **Understand how to use GROUP BY, ORDER BY, WHERE, and HAVING.**
 - What is the `GROUP BY` clause and what does it do?
 
-    The `GROUP BY` a clause is used to group data results together to make more meaningful information. `GROUP BY` statements collate rows of the same value together into its own group. NOTE:  `SELECT` statement can only use columns that are used in an aggregate function or listed by the `GROUP BY` clause. Any additional columns that are not used in the context above will throw an error. 
+    The `GROUP BY` a clause is used to group data results together to make more meaningful information. `GROUP BY` statements collate rows of the same value together into its own group. NOTE:  Any columns that are mentioned in the `SELECT` statement alongside an aggregate function must be included in the `GROUP BY` clause. 
 
     ```sql
     SELECT col_name, aggre_func(col_name)
@@ -311,6 +379,8 @@
     FROM table_name
     ORDER BY col_2 DESC, col_1;  
     ```
+
+    In `ORDER BY` the `false` value comes before the `true` value and if two values are the same then the order they will be placed in will be arbitrary. 
 
 - What is the `WHERE` clause used for and what does it do?
 
@@ -353,7 +423,7 @@
 - **Be familiar with using sub**-**queries**
 - What is a sub-query?
 
-    A sub-query is a nested query that is used as a condition within an outer query. The result of his nested query is then used the operation of the outer query. This can remove the need to JOIN two separate tables together and may have some performance benefits. However, JOIN statements are generally more efficient. 
+    A sub-query is a nested query that is used as a condition within an outer query. The result of this nested query is then used the operation of the outer query. This can remove the need to JOIN two separate tables together and may have some performance benefits. However, JOIN statements are generally more efficient. 
 
 - What are the sub query expressions that can be used in combination with a nested query?
     - `IN` - compares the evaluated expression of the outer query to the rows in the virtual table returned by the nested subquery. If the evaluated expression is contained within the nested sub query's result, it returns true the row is selected.
@@ -448,6 +518,10 @@
     The `DEFAULT` value set for the column must be the same as the datatype defined for the column. 
 
 - **Be able to describe what primary, foreign, natural, and surrogate keys are**.
+- What are keys used for?
+
+    Keys are used as a means create relationships between tables. They are used to identity a specific row in a table or to reference a different row in a preexisting table. 
+
 - What is a PRIMARY KEY? What is its purpose?
 
     A `PRIMARY KEY` is a special type of constraint that is used primarily as a unique identifier for a row within a table. A primary key will apply the the `NOT NULL` and `UNIQUE` constraints to the column by default. This allows relationships to be created between two entities. Each table can only have one PRIMARY KEY and this column is conventionally named `id.`   
@@ -487,11 +561,12 @@
 
     A FOREIGN KEY refers to two things: 
 
-    Foreign key column - A foreign key column represents a relationship between two tables. It references a row in a different table using it's primary key.  
-
-    Foreign key constraint - A foreign key constraint is the constraint that is placed on the values contained within foreign key column that it must abide by. 
+    - Foreign key column - A foreign key column represents a relationship between two tables. It references a row in a different table using it's primary key.
+    - Foreign key constraint - A foreign key constraint is the constraint that is placed on the values contained within foreign key column that it must abide by.
 
     "*A Foreign Key allows us to associate a row in one table to a row in another table. This is done by setting a column in one table as a Foreign Key and having that column reference another table's Primary Key column."* - LS
+
+    The foreign key constraint means the that the table it is referencing must have the value exist for it to be added. You must first remove the foreign key constraint to be able to drop the table it is referencing.
 
 - What are the two ways to add a FOREIGN KEY constraint?
 
@@ -592,6 +667,10 @@
     ```
 
 - **Create and remove foreign key constraints from a column.**
+- What are differences between **column constraints** and **table constraints**?
+
+    Column constraints are only concerned with data specifically attributed to a single column. Table constraints are used when the constraint uses 2 or more columns from the table to 
+
 - How do you add a foreign key when creating a table?
 
     ```sql
@@ -621,11 +700,19 @@
 
 ### Database Diagrams
 
+- What is a database entity?
+
+    A database entity can be thought of as a real world noun that exists within the model of the database, A entity does not directly represent a table as entities can be made up of multiple tables. 
+
 - What is a relational database?
 
-    Relational databases are called relational as it persists data as a set of relations. A table made up of columns and rows can be considered a relation. If you use something from the `FROM` clause in a `SELECT` statement, it's probably a relation.
+    Relational databases are called relational as they persists data as a set of relations. A table, made up of columns and rows, can be considered a relation. If you use something from the `FROM` clause in a `SELECT` statement, it's like to be a relation.
 
     A *relationship* is different in the sense that we use relationship to discuss how two entities (or data contained within tables) relate between one another. A *relation* is simply another way of saying 'table'.
+
+- What is a model that contains entities and relationships?
+
+    This called a entity relationship model. They typically use crow's foot notation to indicate the type of relationship different entities have with one another. 
 
 - **Talk about the different levels of schema.**
 - What are the 3 different levels of schema? What is each one concerned with?
