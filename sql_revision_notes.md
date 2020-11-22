@@ -14,9 +14,9 @@
 
     A relational database management system. They allow us to create, interact, modify and remove tables that exist within a database.
 
-- What does SQL stand for? What is its purpose?
+- What does SQL stand for? What is it used for?
 
-    SQL stands for Structured Query Language and is the programming language that is used to interact with relational databases.
+    SQL stands for Structured Query Language and is a special purpose, declarative programming language that is used to interact with, and manipulate relational databases.
 
 - How is SQL different in its programming language to Ruby?
 
@@ -84,6 +84,13 @@
 - What is *normalization?*
 
     Normalization is the process of splitting up data across multiple tables to prevent data duplication and preserve data integrity. This means we're able to reduce data redundency and improve data integrity, 
+
+- Explain updates anomalies, deletion anomalies and insertion anomalies
+    - Update anomalies are when a column needs to be updated. However, this also means that that every other rows would also need to be updated individually. This then has a high chance of making the database inconsistent.
+    - Deletion anomalies occur when deleting a column's data would also result in losing the data that is contained in other columns.
+    - Insertion anomalies take place when we can't add data to a column without also adding data to additional columns.
+
+    The anomalies are the result or de-normalized tables that contain information that should be in separate entities.  
 
 ### Interacting with PostgreSQL
 
@@ -180,15 +187,15 @@
 
 - What does INNER JOIN do?
 
-    INNER JOIN is used to return the result of the both tables included in the query at the point of intersection. If a row contains NULL data then that row is excluded from the results. An INNER JOIN is one of the most frequently used JOIN statements used in SQL. 
+    INNER JOIN is used to return the result of the both tables included in the query at the point of intersection (ON clause). If a row contains NULL data then that row is excluded from the results. An INNER JOIN is one of the most frequently used JOIN statements used in SQL. 
 
 - What does a LEFT OUTER JOIN do?
 
-    A LEFT OUTER JOIN is used to return the result of two tables joined at the point of intersection. The LEFT OUTER JOIN takes all the rows that are defined as the LEFT table and joins the second table to it. The LEFT tables rows are always returned even in the second table's connecting rows contain NULL values. We do not receive the second table's row if there is no matching row.
+    A LEFT OUTER JOIN is used to return the result of two tables joined at the point of intersection (ON clause). The LEFT OUTER JOIN takes all the rows that are defined as the LEFT table and joins the second table to it. The LEFT tables rows are always returned even if the second table's connecting rows contain NULL values. We do not receive the second table's row if there is no matching row.
 
 - What does RIGHT OUTER JOIN do?
 
-    RIGHT OUTER JOIN returns the result of the two tables that are contained within the query at the point of intersection. The table defined as the RIGHT table will include all of it's rows and data. The second table's rows will still be included in the result even if they contain NULL values.  We do not receive the second table's row if there is no matching row. 
+    RIGHT OUTER JOIN returns the result of the two tables that are contained within the query at the point of intersection (ON clause). The table defined as the RIGHT table will include all of it's rows and data. The second table's rows will still be included in the result even if they contain NULL values.  We do not receive the second table's row if there is no matching row. 
 
 - What does CROSS JOIN do?
 
@@ -201,11 +208,11 @@
 - **Name and define the three sublanguages of SQL and be able to classify different statements by sublanguage.**
 - What is DDL?
 
-    DDL is a sub-language of SQL and stands for **Data Definition Language.** This design language is used to create, manipulate and destroy tables and their design schema. It is not concerned with the data contained within the table, only the structure and rules that govern the table itself. DDL uses the keywords **`CREATE`  , `DROP`  and `ALTER`.**   
+    DDL is a sub-language of SQL and stands for **Data Definition Language.** This design language is used to create, manipulate and delete tables and their design schema. It is not concerned with the data contained within the table, only the structure and rules that govern the table itself. DDL uses the keywords **`CREATE`  , `DROP`  and `ALTER`.**   
 
 - WHAT IS DML?
 
-    DML stands for **Data Manipulation Language** and is primary concerned with the insertion, retrieval, manipulation and deletion of data contained within a table's schema. DML uses the `INSERT`, `SELECT` ,`UPDATE`, `DELETE` clauses to manage data within a table.  
+    DML stands for **Data Manipulation Language** and is primary concerned with the insertion, retrieval, manipulation and deletion of data contained within a table and database. DML uses the `INSERT`, `SELECT` ,`UPDATE`, `DELETE` clauses to manage data within a table.  
 
 - What is DCL?
 
@@ -339,7 +346,7 @@
 - **Understand how to use GROUP BY, ORDER BY, WHERE, and HAVING.**
 - What is the `GROUP BY` clause and what does it do?
 
-    The `GROUP BY` a clause is used to group data results together to make more meaningful information. `GROUP BY` statements collate rows of the same value together into its own group. NOTE:  Any columns that are mentioned in the `SELECT` statement alongside an aggregate function must be included in the `GROUP BY` clause. 
+    The `GROUP BY` a clause is used to group data results together to make more meaningful information. It is also used to reduce redundancy regarding the output of data.  `GROUP BY` statements collate rows of the same values together in the columns listed. NOTE:  Any columns that are mentioned in the `SELECT` statement alongside an aggregate function must be included in the `GROUP BY` clause. 
 
     ```sql
     SELECT col_name, aggre_func(col_name)
@@ -357,7 +364,7 @@
 
 - What is the `ORDER BY` clause and what does it do?
 
-    The `ORDER BY` clause is used to sort rows in the returned results in particular order. This useful for seeing data contained within rows in a distinct sequence, either ascending or descending. 
+    The `ORDER BY` clause is used to sort rows in a query's results, in particular order. This useful for seeing data contained within rows in a distinct sequence, either ascending or descending. 
 
     ```sql
     SELECT col_name
@@ -370,7 +377,7 @@
      
     The `ASC` keyword is used to organise the results in an ascending order, starting with the lowest value and ending with the highest. `ASC` is the default when there is no keyword specified. 
 
-    The `DESC` keyword can also be used to organise the results in a descending order. The `DESC` keyword must be specificied as it is not the default choice. 
+    The `DESC` keyword can also be used to organise the results in a descending order. The `DESC` keyword must be specified as it is not the default choice. 
 
     You can organise the results by multiple columns by including them in the a list after the `ORDER BY` keyword and organising them by priority. If the two rows have the same data, they will then be organised the secondary `ORDER BY` clause.
 
@@ -384,7 +391,7 @@
 
 - What is the `WHERE` clause used for and what does it do?
 
-    The `WHERE` clause is used as part of a `SELECT` statement to filter rows by comparing a specified expression with the data found in each row. The `WHERE` expression make use of operators to generate an expression. The `WHERE` clause filters at the row level. 
+    The `WHERE` clause is used as part of a `SELECT` statement to filter rows by evaluating a specified expression with the data found in each row to a boolean value. The `WHERE` expression make use of operators to generate an expression. The `WHERE` clause filters at the row level. 
 
     ```sql
     SELECT col_name
@@ -466,11 +473,11 @@
 - **Describe what a sequence is and what they are used for.**
 - What is a sequence?
 
-     A sequence is a special kind of relation that is automatically generated every time the `serial` keyword is used to define a table's schema. It remembers the last number it generated, so it will generate numbers in a predetermined sequence automatically. It does this using the `nextval` method. This is often used to keep track of, and identify, rows in a table. 
+     A sequence is a database object, a single row table, that is automatically generated every time the `serial` datatype is used to define a table's schema. It remembers the last number it generated, so it will generate numbers in a predetermined sequence automatically. It does this using the `nextval` method. Once a number has been generated, it will not be generated again. This is often used to keep track of, and uniquely identify, rows in a table. 
 
 - What are the two ways you can create a sequence.
 
-    You can create a sequence automatically by using the `serial` datatype when creating a table. Moreover, you can manually create a sequence through the use of the `CREATE SEQUENCE` statement followed by a name for the sequence. 
+    You can create a sequence automatically by using the `serial` datatype when creating a table. Moreover, you can manually create a sequence through the use of the `CREATE SEQUENCE` statement followed by a name for the sequence. This will return a sequence object. 
 
 - **Create an auto-incrementing column.**
 - What datatype do you use to create an auto incrementing column?
@@ -524,7 +531,7 @@
 
 - What is a PRIMARY KEY? What is its purpose?
 
-    A `PRIMARY KEY` is a special type of constraint that is used primarily as a unique identifier for a row within a table. A primary key will apply the the `NOT NULL` and `UNIQUE` constraints to the column by default. This allows relationships to be created between two entities. Each table can only have one PRIMARY KEY and this column is conventionally named `id.`   
+    A `PRIMARY KEY` is a special type of constraint that is used primarily as a unique identifier for a row within a table. A primary key will apply the the `NOT NULL` and `UNIQUE` constraints to the column by default. This allows relationships to be created between two entities. Each table can only have one PRIMARY KEY and this column is conventionally named `id.`  and its datatype is an integer. It is good practice to have all tables use a primary key. 
 
     Examples:
 
@@ -567,6 +574,8 @@
     "*A Foreign Key allows us to associate a row in one table to a row in another table. This is done by setting a column in one table as a Foreign Key and having that column reference another table's Primary Key column."* - LS
 
     The foreign key constraint means the that the table it is referencing must have the value exist for it to be added. You must first remove the foreign key constraint to be able to drop the table it is referencing.
+
+    A FOREIGN KEY must have the NOT NULL constraint added as it is not inherent when adding the key.
 
 - What are the two ways to add a FOREIGN KEY constraint?
 
@@ -738,7 +747,7 @@
     If it is required, there must be at least one instance of that entity. If its optional, there doesn't need to be any instances of that entity.
 
 - **Be able to draw database diagrams using crow's foot notation.**
-- Do entity relationship models reflect all tables used within a database?
+- Do entity relationship diagrams reflect all tables used within a database?
 - What does a one to one relationship look like using crow's foot notation?
 
     A one-to-one relationship looks like a straight line between entities.
