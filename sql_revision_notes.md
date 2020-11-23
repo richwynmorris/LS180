@@ -468,6 +468,18 @@
     - They could be argued to be more readable and make more logical sense in certain situations.
     - They could be performance benefits to using it over a JOIN statement.
 
+- What do you need to do if you are selecting columns from a virtual table?
+
+    You must provide an alias for the virtual table you are using in the query/SELECT clause. 
+
+    ```sql
+    SELECT id.new_table FROM (SELECT a_column FROM a_table) AS new_table
+    ```
+
+- What is a scalar subquery?
+
+    A scalar subquery is a subquery that returns only one column. 
+
 ### PostgreSQL
 
 - **Describe what a sequence is and what they are used for.**
