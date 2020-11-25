@@ -1,5 +1,8 @@
 # RB180 - Study Guide
 
+Created: Oct 25, 2020 2:33 PM
+Reviewed: No
+
 ### General Database Knowledge
 
 - What is a database?
@@ -92,6 +95,14 @@
 
     The anomalies are the result or de-normalized tables that contain information that should be in separate entities.  
 
+- What is an expression?
+
+    A expression makes use of operators and functions to perform an operation.
+
+- What operator is used to concatenate string objects?
+
+    ||
+
 ### Interacting with PostgreSQL
 
 - Provide an example of a client application in PostgreSQL? What are they?
@@ -128,6 +139,12 @@
     psql -d database_name < my_sql_file.sql 
     ```
 
+- What is `psql` syntax for adding a a SQL dump to a database that you're already in?
+
+    ```sql
+    my_database=# \i ~/some/files/file_to_import.sql```
+    ```
+
 - What is `=` used for in a SQL query?
 
     `=` is used as an equality operator, particularly when used within a `WHERE` clause.
@@ -148,7 +165,7 @@
 
 - Why cant you use `value = NULL`?
 
-    You can't use `value = NULL` as the`NULL` is a special value that represents nothing. As a result, `IS NULL` must be must instead to evaluate the expression.
+    You can't use `value = NULL` as the`NULL` is a special value that represents nothing as does not evaluate to a boolean value. As a result, `IS NULL` must be must instead to evaluate the expression. Moreover, when `NULL` is used alongside a operator is doesn't return a boolean value like more general purpose programming languages but instead returns `NULL.` 
 
 - Explain `LIMIT` and `OFFSET` .
 
@@ -208,7 +225,7 @@
 - **Name and define the three sublanguages of SQL and be able to classify different statements by sublanguage.**
 - What is DDL?
 
-    DDL is a sub-language of SQL and stands for **Data Definition Language.** This design language is used to create, manipulate and delete tables and their design schema. It is not concerned with the data contained within the table, only the structure and rules that govern the table itself. DDL uses the keywords **`CREATE`  , `DROP`  and `ALTER`.**   
+    DDL is a sub-language of SQL and stands for **Data Definition Language.** This sub language is used to create, manipulate and delete tables and their design schema. It is not concerned with the data contained within the table, only the structure and rules that govern the table itself. DDL uses the keywords **`CREATE`  , `DROP`  and `ALTER`.**   
 
 - WHAT IS DML?
 
@@ -467,7 +484,6 @@
 - What is a reason for using subquerys
     - They could be argued to be more readable and make more logical sense in certain situations.
     - They could be performance benefits to using it over a JOIN statement.
-
 - What do you need to do if you are selecting columns from a virtual table?
 
     You must provide an alias for the virtual table you are using in the query/SELECT clause. 
