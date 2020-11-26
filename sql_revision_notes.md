@@ -145,6 +145,12 @@ Reviewed: No
     my_database=# \i ~/some/files/file_to_import.sql```
     ```
 
+- What is the syntax for taking preexisting SQL code and creating an SQL dump file to recreate your database and tables?
+
+    ```sql
+    pg_dump -d sql-course -t weather --inserts > dump.sql
+    ```
+
 - What is `=` used for in a SQL query?
 
     `=` is used as an equality operator, particularly when used within a `WHERE` clause.
@@ -166,6 +172,10 @@ Reviewed: No
 - Why cant you use `value = NULL`?
 
     You can't use `value = NULL` as the`NULL` is a special value that represents nothing as does not evaluate to a boolean value. As a result, `IS NULL` must be must instead to evaluate the expression. Moreover, when `NULL` is used alongside a operator is doesn't return a boolean value like more general purpose programming languages but instead returns `NULL.` 
+
+- Why can including `NULL` as data in your table be a bad idea?
+
+    `NULL` always returns the equivalent of 'nothing' which is `NULL`. When it is included in data it is always sorted to the top of the returned virtual table as it impossible to be compared to other data that exists in the table. This can skewer results. The way to fix this is to add a `NOT NULL` constraint to the column and add an appropriate default value that can be used to compare when evaluating statements. 
 
 - Explain `LIMIT` and `OFFSET` .
 
