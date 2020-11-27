@@ -103,6 +103,10 @@ Reviewed: No
 
     ||
 
+- Why do we need to prefix column names with table names?
+
+    We need to prefix column names with table names as if two columns have the same name across two different tables, SQL will throw an 'ambiguous' error message in response.
+
 ### Interacting with PostgreSQL
 
 - Provide an example of a client application in PostgreSQL? What are they?
@@ -204,6 +208,9 @@ Reviewed: No
     5. Compute values to return using `SELECT` list.
     6. Sort results via `ORDER BY`.
     7. Limit results via `LIMIT`.
+- What does `substr()` do?
+
+    `substr()` takes two arguments. The first is the string which will be used to retrieve the substring from, the second is the index position within the string that the substring should start from. The aggregate function will take the remaining string characters, from the indicated index position to the end, as the substring.
 
 ### SQL
 
