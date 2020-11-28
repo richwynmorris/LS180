@@ -33,6 +33,49 @@ Reviewed: No
 
     An SQL query is a subset of the SQL statement. However, a SQL query is more concerned with looking up data and searching through a table while a SQL statement is more concerned with updating or modifying data within a table. Ruby is a general purpose programming language.
 
+- What are the steps a select query goes through to perform an operation?
+
+    ### *"Rows are collected into a virtual derived table*
+
+    *You can think of this step as the database creating a new temporary 
+    table using the data from all the tables listed in the query's `FROM` clause. This includes tables that are used in `JOIN` clauses.*
+
+    ### *Rows are filtered using `WHERE` conditions*
+
+    *All the conditions in the `WHERE` clause are evaluated for each row, and those that don't meet these requirements are removed.*
+
+    ### *Rows are divided into groups*
+
+    *If the query includes a `GROUP BY` clause, the remaining rows are divided into the appropriate groups.*
+
+    ### *Groups are filtered using `HAVING` conditions*
+
+    `*HAVING` conditions are very similar to `WHERE`
+     conditions, only they are applied to the values that are used to create
+     groups and not individual rows. This means that a column that is 
+    mentioned in a `HAVING` clause should almost always appear in a `GROUP BY` clause and/or an aggregate function in the same query. Both `GROUP BY` and aggregate functions perform grouping, and the `HAVING` clause is used to filter that aggregated/grouped data.*
+
+    `*HAVING` clauses aren't as common as `WHERE` clauses, and we won't be seeing them very much in this course.*
+
+    ### *Compute values to return using select list*
+
+    *Each element in the select list is evaluated, including any 
+    functions, and the resulting values are associated with the name of the 
+    column they are from or the name of the last function evaluated, unless a
+     different name is specified in the query with `AS`.*
+
+    ### *Sort Results*
+
+    *The result set is sorted as specified in an `ORDER BY` 
+    clause. Without this clause, the results are returned in an order that 
+    is the result of how the database executed the query and the rows' order
+     in the original tables. It's best to always specify an explicit order 
+    if your application relies on rows being returned in a specific order.*
+
+    ### *Limit Results*
+
+    *If `LIMIT` or `OFFSET` clauses are included in the query, these are used to adjust which rows in the result set are returned." - LS*
+
 - What are the three reasons for learning SQL?
 
     We interact with structured data on  a daily basis so knowing how to create an manipulate this data is a powerful skillset to develop. 
@@ -106,6 +149,10 @@ Reviewed: No
 - Why do we need to prefix column names with table names?
 
     We need to prefix column names with table names as if two columns have the same name across two different tables, SQL will throw an 'ambiguous' error message in response.
+
+- What are UUIDs?
+
+    *"UUIDs (or universally unique identifiers) are very large numbers that are used to identify individual objects or, when working with a database, rows in a database. There are a few formats and different ways to generate these numbers (they don't increment by 1 as we've been doing). UUIDs are often represented using hexadecimal strings with dashes such as f47ac10b-58cc-4372-a567-0e02b2c3d479."* - LS
 
 ### Interacting with PostgreSQL
 
@@ -211,6 +258,14 @@ Reviewed: No
 - What does `substr()` do?
 
     `substr()` takes two arguments. The first is the string which will be used to retrieve the substring from, the second is the index position within the string that the substring should start from. The aggregate function will take the remaining string characters, from the indicated index position to the end, as the substring.
+
+- What does the metacommand `\d` do?
+
+    This describes the tables that exist within the database and `\d table_name` describes the structure of the specified table. 
+
+- What does the metacommand `\dt` do?
+
+    This metacommand returns a list of the relations that exist within the database. It identifies the schema, the name , the  type and the owner. Adding a table name as an argument after the metacommand will only return the description of the table specified. 
 
 ### SQL
 
@@ -518,7 +573,7 @@ Reviewed: No
 - **Describe what a sequence is and what they are used for.**
 - What is a sequence?
 
-     A sequence is a database object, a single row table, that is automatically generated every time the `serial` datatype is used to define a table's schema. It remembers the last number it generated, so it will generate numbers in a predetermined sequence automatically. It does this using the `nextval` method. Once a number has been generated, it will not be generated again. This is often used to keep track of, and uniquely identify, rows in a table. 
+     A sequence is a database object, a single row table, that is automatically generated every time the `serial` datatype is used to define a table's schema. It remembers the last number it generated, so it will generate numbers in a predetermined sequence automatically. It does this using the `nextval` method which is invoked by default and passes in the associated sequence object. Once a number has been generated, it will not be generated again. This is often used to keep track of, and uniquely identify, rows in a table. 
 
 - What are the two ways you can create a sequence.
 
@@ -609,6 +664,13 @@ Reviewed: No
 
     Following conventions in software development saves time, reduces confusion, and minimizes the amount of time needed to get up to speed on a new project.
 
+- What are the conventions for PRIMARY KEYS?
+    1. *"All tables should have a primary key column called `id`.*
+    2. *The `id` column should automatically be set to a unique value
+    as new rows are inserted into the table.*
+    3. *The `id` column will often be an integer, but there are other data types
+    (such as UUIDs) that can provide specific benefits."*
+
 - What is a FOREIGN KEY? What is its purpose?
 
     A FOREIGN KEY refers to two things: 
@@ -666,6 +728,10 @@ Reviewed: No
     To create a surrogate key, it is often best to use the `serial` datatype when defining a column. This means that every time a new row of data is added to the table, the surrogate key will be auto incremented. This means each row will have a unique integer value. 
 
 - **Create and remove CHECK constraints from a column.**
+- What is a CHECK constraint?
+
+    A CHECK constraint is a rule that must be met by the data for it to be stored in the table.
+
 - How do you add a CHECK constraint in a column's definition?
 
     To add a CHECK constraint in a column's definition you need to use the following syntax:
@@ -723,7 +789,7 @@ Reviewed: No
 - **Create and remove foreign key constraints from a column.**
 - What are differences between **column constraints** and **table constraints**?
 
-    Column constraints are only concerned with data specifically attributed to a single column. Table constraints are used when the constraint uses 2 or more columns from the table to 
+    Column constraints are only concerned with data specifically attributed to a single column. Table constraints are set at the table level.
 
 - How do you add a foreign key when creating a table?
 
